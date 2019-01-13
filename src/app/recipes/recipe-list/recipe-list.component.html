@@ -5,14 +5,14 @@
 </div>
 <div class="row">
     <div class="col-12">
-        <a href="#" class="list-group-item list-group-item-action">
+        <a href="#" class="list-group-item list-group-item-action" *ngFor="let recipe of recipes">
             <div class="d-flex justify-content-between">
-                <div>
-                    <h5>Chipotle chicken tacos</h5>
-                    <p>Take your taste buds to Mexico with these flavoursome tacos.</p>
+                <div class="m-1">
+                    <h5>{{ recipe.name }}</h5>
+                    <p>{{ recipe.description }}</p>
                 </div>
-                <div>
-                    <img src="https://img.taste.com.au/fF1NhAd6/w643-h428-cfill-q90/taste/2018/12/chipotle-chicken-tacos-144989-1.jpg" alt="" class="img-fluid" style="max-height: 100px">
+                <div class="row align-items-center m-1">
+                    <img [src]="recipe.imageUrl" [alt]="recipe.name" style="max-height: 100px">
                 </div>
             </div>
         </a>
