@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-12">
-    <img src="https://via.placeholder.com/500" alt="" class="img-fluid">
-    <h5 class="mt-2">Recipe Name</h5>
-    <p>Recipe Description</p>
-    <p>Ingredients</p>
+    <img [src]="recipe.imageUrl" alt="{{ recipe.name }}" class="img-fluid">
+    <h5 class="mt-2">{{ recipe.name }}</h5>
+    <p>{{ recipe.description }}</p>
+    <p>List of Ingredients</p>
     <div class="dropdown">
       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Manage Recipe</button>
       <div class="dropdown-menu">
