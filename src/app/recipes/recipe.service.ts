@@ -3,7 +3,7 @@ import { Recipe } from './recipe.model';
 
 export class RecipeService {
 
-    private recipeEmitter = new EventEmitter<Recipe>();
+    private recipeChanged = new EventEmitter<Recipe>();
 
     private recipes: Recipe[] = [
         new Recipe(
@@ -23,12 +23,12 @@ export class RecipeService {
         return this.recipes.slice();
     }
 
-    selectRecipe(recipe: Recipe) {
-        this.recipeEmitter.emit(recipe);
+    changeRecipe(recipe: Recipe) {
+        this.recipeChanged.emit(recipe);
     }
 
-    onRecipeSelected(callback: any) {
-        this.recipeEmitter.subscribe(callback);
+    onRecipeChanged(callback: any) {
+        this.recipeChanged.subscribe(callback);
     }
 
 }
