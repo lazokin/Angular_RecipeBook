@@ -15,12 +15,28 @@ export class ShoppingListService {
     }
 
     addIngredient(ingredient: Ingredient) {
-        this.ingredients.push(ingredient);
+        this.addIngredientInternal(ingredient);
+        this.ingredientsChanged.emit(this.ingredients.slice());
+    }
+
+    addIngredients(ingredients: Ingredient[]) {
+        ingredients.forEach(ingredient => {
+            this.addIngredientInternal(ingredient);
+        });
         this.ingredientsChanged.emit(this.ingredients.slice());
     }
 
     onIngredientsChanged(callback: any) {
         this.ingredientsChanged.subscribe(callback);
+    }
+
+    private addIngredientInternal(ingredient: Ingredient) {
+        let index = this.ingredients.findIndex(i => i.name === ingredient.name);
+        if (index >= 0) {
+            this.ingredients[index].amount += ingredient.amount;
+        } else {
+            this.ingredients.push(new Ingredient(ingredient.name, ingredient.amount));
+        }
     }
 
 }
