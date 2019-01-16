@@ -1,10 +1,10 @@
-import { EventEmitter } from '@angular/core';
 import { Recipe } from '../model/recipe.model';
 import { Ingredient } from '../model/ingredient.model';
+import { ShoppingListService } from './shopping-list.service';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class RecipeService {
-
-    private recipeChanged = new EventEmitter<Recipe>();
 
     private recipes: Recipe[] = [
         new Recipe(
@@ -28,16 +28,18 @@ export class RecipeService {
         )
     ];
 
+    constructor(private shoppingListService: ShoppingListService) {}
+
     getRecipes() {
         return this.recipes.slice();
     }
 
-    changeRecipe(recipe: Recipe) {
-        this.recipeChanged.emit(recipe);
+    getRecipe(id: number) {
+        return this.recipes[id];
     }
 
-    onRecipeChanged(callback: any) {
-        this.recipeChanged.subscribe(callback);
+    addToShoppingList(id: number) {
+        this.shoppingListService.addIngredients(this.recipes[id].ingredients);
     }
 
 }

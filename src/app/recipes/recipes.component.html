@@ -5,9 +5,6 @@
   </div>
   <div class="col-lg-6">
     <hr>
-    <app-recipe-detail *ngIf="selectedRecipe; else infoText" [recipe]="selectedRecipe"></app-recipe-detail>
-    <ng-template #infoText>
-      <p>No recipe selected</p>
-    </ng-template>
+    <router-outlet></router-outlet>
   </div>
 </div>
