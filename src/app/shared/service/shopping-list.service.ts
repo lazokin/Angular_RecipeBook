@@ -31,7 +31,7 @@ export class ShoppingListService {
     }
 
     private addIngredientInternal(ingredient: Ingredient) {
-        let index = this.ingredients.findIndex(i => i.name === ingredient.name);
+        const index = this.ingredients.findIndex(i => i.name === ingredient.name);
         if (index >= 0) {
             this.ingredients[index].amount += ingredient.amount;
         } else {
