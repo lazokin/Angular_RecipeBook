@@ -8,6 +8,7 @@ import { Recipe } from 'src/app/shared/model/recipe.model';
 })
 export class RecipeItemComponent implements OnInit {
 
+  @Input() index: Recipe;
   @Input() recipe: Recipe;
 
   constructor() {}
