@@ -7,10 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  feature = 'recipes';
-
-  onFeatureChanged(feature: string) {
-    this.feature = feature;
-  }
-
 }

@@ -38,7 +38,7 @@ const routes: Routes = [
         path: 'shopping-list',
         component: ShoppingListComponent
     }
-]
+];
 
 @NgModule({
     imports: [

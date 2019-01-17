@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col-12">
 
-    <img src="{{recipe.imageUrl}}" alt="{{recipe.name}}" class="img-fluid">
-
-    <h5 class="mt-2">{{recipe.name}}</h5>
+    <h4>{{recipe.name}}</h4>
 
     <p>{{recipe.description}}</p>
 
-    <ul class="list-group">
+    <img src="{{recipe.imageUrl}}" alt="{{recipe.name}}" class="img-fluid">
+
+    <ul class="list-group mt-3">
       <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
           {{ingredient.name}} ({{ingredient.amount}})
       </li>
