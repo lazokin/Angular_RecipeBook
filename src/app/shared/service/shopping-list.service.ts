@@ -28,7 +28,7 @@ export class ShoppingListService {
         this.ingredientsChangedSubject.next(this.ingredients.slice());
     }
 
-    subscribeIngredientsChanged(callback: any) : Subscription {
+    subscribeIngredientsChanged(callback: any): Subscription {
         return this.ingredientsChangedSubject.subscribe(callback);
     }
 
