@@ -1,32 +1,33 @@
 version: 2
 jobs:
-  build:
-    docker:
-      - image: circleci/node:11.6
-
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
-
-      - run:
-          name: Install Packages
-          command: npm install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-        
-      - run:
-          name: Run Lint
-          command: npm run lint
-
-      - run:
-          name: Run Build
-          command: npm run build --prod
+    build:
+        docker:
+        - image: circleci/node:11.6
+        working_directory: ~/repo
+        steps:
+        - checkout
+        - restore_cache:
+            keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+        - run:
+            name: Install Packages
+            command: npm install
+        - save_cache:
+            paths:
+                - node_modules
+            key: v1-dependencies-{{ checksum "package.json" }}
+        - run:
+            name: Lint Project
+            command: npm run lint
+        - run:
+            name: Build Project
+            command: npm run build --prod
+        - deploy:
+            name: Deploy Application
+            command: |
+                echo "CIRCLE_BRANCH = $CIRCLE_BRANCH"
+                echo "CIRCLE_TAG = $CIRCLE_TAG"
+                if [ "${CIRCLE_BRANCH}" == "master" ] && [ -n "${CIRCLE_TAG}" ]; then
+                    echo "deploying ..."
+                fi
