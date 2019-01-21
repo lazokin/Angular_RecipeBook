@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { RecipeService } from 'src/app/shared/service/recipe.service';
 
 @Component({
@@ -12,9 +12,14 @@ export class RecipeEditComponent implements OnInit {
 
   private id: number;
   private editMode: boolean;
+  
   private form: FormGroup;
+  private nameFormControl: FormControl;
+  private descriptionFormControl: FormControl;
+  private imageUrlFormControl: FormControl;
+  private ingredientsFormArray: FormArray;
 
-  constructor(private service: RecipeService, private route: ActivatedRoute) { }
+  constructor(private service: RecipeService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(
@@ -30,24 +35,50 @@ export class RecipeEditComponent implements OnInit {
     console.log(this.form);
   }
 
+  ingredientsControls(): FormArray['controls'] {
+    return this.ingredientsFormArray.controls;
+  }
+
+  hasIngredients() {
+    return this.ingredientsFormArray.length > 0;
+  }
+
   private initialiseForm() {
-    
-    let name = '';
-    let description = '';
-    let imageUrl = '';
+
+    this.nameFormControl = new FormControl('');
+    this.descriptionFormControl = new FormControl('');
+    this.imageUrlFormControl = new FormControl('');
+    this.ingredientsFormArray = new FormArray([]);
 
     if (this.editMode) {
       let recipe = this.service.getRecipe(this.id);
-      name = recipe.name;
-      description = recipe.description;
-      imageUrl = recipe.imageUrl;
+      this.nameFormControl.setValue(recipe.name)
+      this.descriptionFormControl.setValue(recipe.description);
+      this.imageUrlFormControl.setValue(recipe.imageUrl);
+      if (recipe['ingredients']) {
+        recipe.ingredients.forEach(ingredient => {
+          this.ingredientsFormArray.push(new FormGroup({
+            'name': new FormControl(ingredient.name),
+            'amount': new FormControl(ingredient.amount)
+          }));
+        })
+      }
     }
 
     this.form = new FormGroup({
-      'name': new FormControl(name),
-      'description': new FormControl(description),
-      'imageUrl': new FormControl(imageUrl)
+      'name': this.nameFormControl,
+      'description': this.descriptionFormControl,
+      'imageUrl': this.imageUrlFormControl,
+      'ingredients': this.ingredientsFormArray
     });
+
+  }
+
+  onAddIngredient() {
+    this.ingredientsFormArray.push(new FormGroup({
+      'name': new FormControl(),
+      'amount': new FormControl()
+    }));
   }
 
 }
