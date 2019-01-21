@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { RecipeService } from 'src/app/shared/service/recipe.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class RecipeEditComponent implements OnInit {
 
   private id: number;
   private editMode: boolean;
+  private submitted: boolean;
   
   private form: FormGroup;
   private nameFormControl: FormControl;
@@ -32,7 +33,10 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form);
+    this.submitted = true;
+    if (this.form.valid) {
+      console.log(this.form);
+    }
   }
 
   ingredientsControls(): FormArray['controls'] {
@@ -45,9 +49,9 @@ export class RecipeEditComponent implements OnInit {
 
   private initialiseForm() {
 
-    this.nameFormControl = new FormControl('');
-    this.descriptionFormControl = new FormControl('');
-    this.imageUrlFormControl = new FormControl('');
+    this.nameFormControl = new FormControl('', [Validators.required]);
+    this.descriptionFormControl = new FormControl('', [Validators.required]);
+    this.imageUrlFormControl = new FormControl('', [Validators.required]);
     this.ingredientsFormArray = new FormArray([]);
 
     if (this.editMode) {
@@ -57,10 +61,7 @@ export class RecipeEditComponent implements OnInit {
       this.imageUrlFormControl.setValue(recipe.imageUrl);
       if (recipe['ingredients']) {
         recipe.ingredients.forEach(ingredient => {
-          this.ingredientsFormArray.push(new FormGroup({
-            'name': new FormControl(ingredient.name),
-            'amount': new FormControl(ingredient.amount)
-          }));
+          this.ingredientsFormArray.push(this.createIngredientFormGroup(ingredient.name, ingredient.amount));
         })
       }
     }
@@ -74,11 +75,15 @@ export class RecipeEditComponent implements OnInit {
 
   }
 
+  private createIngredientFormGroup(name?: string, amount?: number): FormGroup {
+    return new FormGroup({
+      'name': new FormControl(name, [Validators.required]),
+      'amount': new FormControl(amount, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
+    });
+  }
+
   onAddIngredient() {
-    this.ingredientsFormArray.push(new FormGroup({
-      'name': new FormControl(),
-      'amount': new FormControl()
-    }));
+    this.ingredientsFormArray.push(this.createIngredientFormGroup());
   }
 
 }
