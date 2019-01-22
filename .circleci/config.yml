@@ -1,4 +1,6 @@
 version: 2
+orbs:
+  heroku: circleci/heroku@1.0.0
 jobs:
     build:
         docker:
@@ -24,12 +26,12 @@ jobs:
                 name: Build Project
                 command: npm run build --prod
     deploy:
-        docker:
-            - image: circleci/node:11.6
+        executor: heroku/default
         steps:
-            - run:
-                name: Deploy Application
-                command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+            - checkout
+            - heroku/install
+            - heroku/deploy-via-git:
+                app-name: lazokin-recipe-book-angular
 
 workflows:
     version: 2
