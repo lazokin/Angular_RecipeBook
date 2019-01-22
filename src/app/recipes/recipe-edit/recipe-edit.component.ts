@@ -14,7 +14,7 @@ export class RecipeEditComponent implements OnInit {
   private index: number;
   private editMode: boolean;
   private submitted: boolean;
-  private form: FormGroup;
+  form: FormGroup;
   private nameFormControl: FormControl;
   private descriptionFormControl: FormControl;
   private imageUrlFormControl: FormControl;
