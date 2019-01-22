@@ -1,6 +1,6 @@
 version: 2
 orbs:
-  heroku: circleci/heroku@1.0.0
+  heroku: circleci/heroku@0.0.4
 jobs:
     build:
         docker:
