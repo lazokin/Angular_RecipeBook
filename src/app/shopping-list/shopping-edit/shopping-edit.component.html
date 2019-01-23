@@ -8,7 +8,7 @@
               type="text"
               id="name"
               name="name"
-              class="form-control" [ngClass]="{'is-invalid': f.submitted && form.controls.name.invalid}"
+              class="form-control" [class.is-invalid]="f.submitted && form.controls.name.invalid"
               ngModel
               required>
             <p class="invalid-feedback">Name required.</p>
@@ -19,7 +19,7 @@
               type="number"
               id="amount"
               name="amount"
-              class="form-control" [ngClass]="{'is-invalid': f.submitted && form.controls.amount.invalid}"
+              class="form-control" [class.is-invalid]="f.submitted && form.controls.amount.invalid"
               ngModel
               required
               pattern="^[1-9]+[0-9]*$">

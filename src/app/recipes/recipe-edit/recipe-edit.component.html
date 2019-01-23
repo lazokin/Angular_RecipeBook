@@ -8,7 +8,7 @@
             <label for="name">Name</label>
             <input
               type="text"
-              class="form-control" [ngClass]="{'is-invalid': isSubmitted() && form.controls.name.invalid}"
+              class="form-control" [class.is-invalid]="isSubmitted() && form.controls.name.invalid"
               id="name"
               formControlName="name"/>
             <p class="invalid-feedback">Name required.</p>
@@ -17,7 +17,7 @@
             <label for="description">Description</label>
             <textarea
               type="text"
-              class="form-control" [ngClass]="{'is-invalid': isSubmitted() && form.controls.description.invalid}"
+              class="form-control" [class.is-invalid]="isSubmitted() && form.controls.description.invalid"
               id="description"
               rows="4"
               formControlName="description"></textarea>
@@ -27,7 +27,7 @@
             <label for="imageUrl">Image URL</label>
             <input
               type="text"
-              class="form-control" [ngClass]="{'is-invalid': isSubmitted() && form.controls.imageUrl.invalid}"
+              class="form-control" [class.is-invalid]="isSubmitted() && form.controls.imageUrl.invalid"
               id="imageUrl"
               formControlName="imageUrl"
               #imageUrlInput/>
@@ -42,18 +42,18 @@
       <div class="row">
         <div class="col-12" formArrayName="ingredients">
           <label for="name">Ingredients</label>
-          <div class="row mb-1" *ngFor="let control of ingredientsControls(); let i = index" [formGroupName]="i">
+          <div class="row mb-1" *ngFor="let ingredientControl of ingredientsControls(); let i = index" [formGroupName]="i">
             <div class="col-6 col-sm-8">
               <input
                 type="text"
-                class="form-control" [ngClass]="{'is-invalid': isSubmitted() && form.controls.ingredients.controls[i].controls.name.invalid}"
+                class="form-control" [class.is-invalid]="isSubmitted() && ingredientControl.controls.name.invalid"
                 formControlName="name"/>
               <p class="invalid-feedback">Name required.</p>
             </div>
             <div class="col-3 col-sm-2">
               <input
                 type="number"
-                class="form-control" [ngClass]="{'is-invalid': isSubmitted() && form.controls.ingredients.controls[i].controls.amount.invalid}"
+                class="form-control" [class.is-invalid]="isSubmitted() && ingredientControl.controls.amount.invalid"
                 formControlName="amount"/>
               <p class="invalid-feedback">Amount required.</p>
             </div>
