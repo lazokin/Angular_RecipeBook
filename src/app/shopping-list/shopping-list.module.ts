@@ -19,6 +19,4 @@ import { ShoppingListComponent } from './shopping-list.component';
         ShoppingListRoutingModule
     ]
 })
-export class ShoppingListModule {
-
-}
+export class ShoppingListModule {}
