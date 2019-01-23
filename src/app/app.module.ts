@@ -7,6 +7,7 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
 
 import { RecipeService } from './shared/service/recipe.service';
 import { ShoppingListService } from './shared/service/shopping-list.service';
@@ -14,7 +15,8 @@ import { ShoppingListService } from './shared/service/shopping-list.service';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
