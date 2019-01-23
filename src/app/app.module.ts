@@ -6,9 +6,6 @@ import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
 
-import { RecipeService } from './shared/service/recipe.service';
-import { ShoppingListService } from './shared/service/shopping-list.service';
-
 @NgModule({
   declarations: [
     AppComponent
@@ -17,10 +14,6 @@ import { ShoppingListService } from './shared/service/shopping-list.service';
     BrowserModule,
     SharedModule,
     CoreModule
-  ],
-  providers: [
-    RecipeService,
-    ShoppingListService
   ],
   bootstrap: [
     AppComponent

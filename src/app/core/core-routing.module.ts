@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 
@@ -10,17 +10,19 @@ const routes: Routes = [
     },
     {
         path: 'recipes',
-        loadChildren: './recipes/recipes.module#RecipesModule'
+        loadChildren: '../recipes/recipes.module#RecipesModule'
     },
     {
         path: 'shopping-list',
-        loadChildren: './shopping-list/shopping-list.module#ShoppingListModule'
+        loadChildren: '../shopping-list/shopping-list.module#ShoppingListModule'
     }
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes, {
+            preloadingStrategy: PreloadAllModules
+        })
     ],
     exports: [
         RouterModule
