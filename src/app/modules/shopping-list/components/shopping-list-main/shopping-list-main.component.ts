@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Ingredient } from '../shared/model/ingredient.model';
 import { Subscription } from 'rxjs';
-import { ShoppingListService } from '../core/services/shopping-list.service';
+
+import { Ingredient } from 'src/app/shared/models/ingredient.model';
+import { ShoppingListService } from 'src/app/shared/services/shopping-list.service';
 
 @Component({
-  selector: 'app-shopping-list',
-  templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.css']
+  selector: 'app-shopping-list-main',
+  templateUrl: './shopping-list-main.component.html',
+  styleUrls: ['./shopping-list-main.component.css']
 })
-export class ShoppingListComponent implements OnInit, OnDestroy {
+export class ShoppingListMainComponent implements OnInit, OnDestroy {
 
   ingredients: Ingredient[];
   private subscription: Subscription;
