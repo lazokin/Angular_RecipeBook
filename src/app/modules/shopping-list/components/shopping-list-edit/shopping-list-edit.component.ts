@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { Ingredient } from 'src/app/shared/models/ingredient.model';
-import { ShoppingListService } from 'src/app/shared/services/shopping-list.service';
+import { AddIngredient, UpdateIngredient, DeleteIngredient, IngredientUnselected } from '../../store/shopping-list.actions';
+import { AppState } from '../../store/shopping-list.state';
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -14,28 +16,25 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
 
   @ViewChild('f') form: NgForm;
   selectedMode = false;
-  selectedIndex = -1;
 
-  private ingredientSelectedSubscription: Subscription;
+  private stateSubscription: Subscription;
 
-  constructor(private shoppingListService: ShoppingListService) { }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.ingredientSelectedSubscription = this.shoppingListService.subscribeIngredientSelected(
-      (index: number) => {
-        const ingredient = this.shoppingListService.getIngredient(index);
+    this.stateSubscription = this.store.select('shoppingList').subscribe(state => {
+      if (state.selectedIndex > -1) {
         this.selectedMode = true;
-        this.selectedIndex = index;
         this.form.setValue({
-          name: ingredient.name,
-          amount: ingredient.amount
+          name: state.selectedIngredient.name,
+          amount: state.selectedIngredient.amount
         });
       }
-    );
+    });
   }
 
   ngOnDestroy() {
-    this.ingredientSelectedSubscription.unsubscribe();
+    this.stateSubscription.unsubscribe();
   }
 
   onSubmit(form: NgForm) {
@@ -43,23 +42,24 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
       return;
     }
     const value = form.value;
+    const ingredient = new Ingredient(value.name, value.amount);
     if (this.selectedMode) {
-      this.shoppingListService.editIngredient(this.selectedIndex, new Ingredient(value.name, value.amount));
+      this.store.dispatch(new UpdateIngredient(ingredient));
     } else {
-      this.shoppingListService.addIngredient(new Ingredient(value.name, value.amount));
+      this.store.dispatch(new AddIngredient(ingredient));
     }
     this.selectedMode = false;
     this.form.resetForm();
-    console.log(form);
   }
 
   onClear() {
     this.selectedMode = false;
     this.form.resetForm();
+    this.store.dispatch(new IngredientUnselected());
   }
 
   onDelete() {
-    this.shoppingListService.deleteIngredient(this.selectedIndex);
+    this.store.dispatch(new DeleteIngredient());
     this.onClear();
   }
 

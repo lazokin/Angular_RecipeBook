@@ -7,7 +7,7 @@ import { RecipeStartComponent } from './components/recipe-start/recipe-start.com
 
 export const routes: Routes = [
     {
-        path: '',
+        path: 'recipes',
         component: RecipesMainComponent,
         children: [
             {

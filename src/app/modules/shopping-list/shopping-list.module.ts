@@ -8,7 +8,6 @@ import { ShoppingListMainComponent } from './components/shopping-list-main/shopp
 
 import { routes } from './shopping-list.routes';
 
-
 @NgModule({
     declarations: [
         ShoppingListEditComponent,

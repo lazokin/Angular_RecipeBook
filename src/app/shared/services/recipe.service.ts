@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { Recipe } from '../../shared/models/recipe.model';
 import { Ingredient } from '../../shared/models/ingredient.model';
-import { ShoppingListService } from './shopping-list.service';
 
 @Injectable()
 export class RecipeService {
@@ -31,7 +30,7 @@ export class RecipeService {
         )
     ];
 
-    constructor(private shoppingListService: ShoppingListService) {}
+    constructor() {}
 
     subscribeRecipesChanged(callback: any): Subscription {
         return this.recipesChangedSubject.subscribe(callback);
@@ -46,7 +45,7 @@ export class RecipeService {
     }
 
     addIngredientsToShoppingList(id: number) {
-        this.shoppingListService.addIngredients(this.recipes[id].ingredients);
+        // this.shoppingListService.addIngredients(this.recipes[id].ingredients);
     }
 
     addRecipe(recipe: Recipe) {

@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, PreloadAllModules } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
 
 import { CoreModule } from './modules/core/core.module';
+import { RecipesModule } from './modules/recipes/recipes.module';
+import { ShoppingListModule } from './modules/shopping-list/shopping-list.module';
 
 import { AppComponent } from './app.component';
 
 import { RecipeService } from './shared/services/recipe.service';
-import { ShoppingListService } from './shared/services/shopping-list.service';
 
 import { routes } from './app.routes';
+import { shoppingListReducer } from './modules/shopping-list/store/shopping-list.reducers';
 
 @NgModule({
   declarations: [
@@ -18,16 +21,16 @@ import { routes } from './app.routes';
   imports: [
     BrowserModule,
     CoreModule,
-    RouterModule.forRoot(routes, {
-      preloadingStrategy: PreloadAllModules
-    })
+    RecipesModule,
+    ShoppingListModule,
+    RouterModule.forRoot(routes),
+    StoreModule.forRoot({shoppingList: shoppingListReducer})
   ],
   exports: [
     RouterModule
   ],
   providers: [
-    RecipeService,
-    ShoppingListService
+    RecipeService
   ],
   bootstrap: [
     AppComponent

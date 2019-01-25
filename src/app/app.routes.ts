@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 
 import { HomeComponent } from './modules/core/components/home/home.component';
+import { RecipesMainComponent } from './modules/recipes/components/recipes-main/recipes-main.component';
+import { ShoppingListMainComponent } from './modules/shopping-list/components/shopping-list-main/shopping-list-main.component';
 
 export const routes: Routes = [
     {
@@ -9,11 +11,11 @@ export const routes: Routes = [
     },
     {
         path: 'recipes',
-        loadChildren: './modules/recipes/recipes.module#RecipesModule'
+        component: RecipesMainComponent
     },
     {
         path: 'shopping-list',
-        loadChildren: './modules/shopping-list/shopping-list.module#ShoppingListModule'
+        component: ShoppingListMainComponent
     }
 ];
 
