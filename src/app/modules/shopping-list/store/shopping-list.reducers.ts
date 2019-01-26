@@ -1,7 +1,22 @@
-import { ShoppingListState, initialShoppingListState } from './shopping-list.state';
 import { Actions, Type, AddIngredient, AddIngredients, UpdateIngredient, IngredientSelected } from './shopping-list.actions';
+import { Ingredient } from 'src/app/shared/models/ingredient.model';
 
-export function shoppingListReducer(state: ShoppingListState = initialShoppingListState, action: Actions): ShoppingListState {
+export interface State {
+    ingredients: Ingredient[];
+    selectedIngredient: Ingredient;
+    selectedIndex: number;
+}
+
+export const initialState: State = {
+    ingredients: [
+        new Ingredient('Apple', 5),
+        new Ingredient('Tomato', 10)
+    ],
+    selectedIngredient: null,
+    selectedIndex: -1
+};
+
+export function shoppingListReducer(state: State = initialState, action: Actions): State {
     switch (action.type) {
         case Type.AddIngredient:
             return addIngredient(state, action);
@@ -20,7 +35,7 @@ export function shoppingListReducer(state: ShoppingListState = initialShoppingLi
     }
 }
 
-function addIngredient(state: ShoppingListState, action: AddIngredient): ShoppingListState {
+function addIngredient(state: State, action: AddIngredient): State {
     const index = state.ingredients.findIndex(i => i.name === action.ingredient.name);
     if (index >= 0) {
         const ingredient = {...state.ingredients[index]};
@@ -33,27 +48,27 @@ function addIngredient(state: ShoppingListState, action: AddIngredient): Shoppin
     }
 }
 
-function addIngredients(state: ShoppingListState, action: AddIngredients): ShoppingListState {
+function addIngredients(state: State, action: AddIngredients): State {
     return {...state, ingredients: [...state.ingredients, ...action.ingredients]};
 }
 
-function updateIngredient(state: ShoppingListState, action: UpdateIngredient): ShoppingListState {
+function updateIngredient(state: State, action: UpdateIngredient): State {
     const ingredient = {...state.ingredients[state.selectedIndex], ...action.ingredient};
     const ingredients = [...state.ingredients];
     ingredients[state.selectedIndex] = ingredient;
     return {...state, ingredients: ingredients, selectedIngredient: null, selectedIndex: -1};
 }
 
-function deleteIngredient(state: ShoppingListState): ShoppingListState {
+function deleteIngredient(state: State): State {
     const ingredients = [...state.ingredients];
     ingredients.splice(state.selectedIndex, 1);
     return {...state, ingredients: ingredients, selectedIngredient: null, selectedIndex: -1};
 }
 
-function ingredientSelected(state: ShoppingListState, action: IngredientSelected): ShoppingListState {
+function ingredientSelected(state: State, action: IngredientSelected): State {
     return {...state, selectedIngredient: {...state.ingredients[action.index]}, selectedIndex: action.index};
 }
 
-function ingredientUnselected(state: ShoppingListState): ShoppingListState {
+function ingredientUnselected(state: State): State {
     return {...state, selectedIngredient: null, selectedIndex: -1};
 }

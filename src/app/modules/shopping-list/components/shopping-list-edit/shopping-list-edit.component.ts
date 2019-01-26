@@ -4,8 +4,9 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { Ingredient } from 'src/app/shared/models/ingredient.model';
-import { AddIngredient, UpdateIngredient, DeleteIngredient, IngredientUnselected } from '../../store/shopping-list.actions';
-import { AppState } from '../../store/shopping-list.state';
+
+import * as fromAppReducers from 'src/app/store/app.reducers';
+import * as fromShoppingListActions from '../../store/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -19,7 +20,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
 
   private stateSubscription: Subscription;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<fromAppReducers.State>) {}
 
   ngOnInit() {
     this.stateSubscription = this.store.select('shoppingList').subscribe(state => {
@@ -44,9 +45,9 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
     const value = form.value;
     const ingredient = new Ingredient(value.name, value.amount);
     if (this.selectedMode) {
-      this.store.dispatch(new UpdateIngredient(ingredient));
+      this.store.dispatch(new fromShoppingListActions.UpdateIngredient(ingredient));
     } else {
-      this.store.dispatch(new AddIngredient(ingredient));
+      this.store.dispatch(new fromShoppingListActions.AddIngredient(ingredient));
     }
     this.selectedMode = false;
     this.form.resetForm();
@@ -55,11 +56,11 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   onClear() {
     this.selectedMode = false;
     this.form.resetForm();
-    this.store.dispatch(new IngredientUnselected());
+    this.store.dispatch(new fromShoppingListActions.IngredientUnselected());
   }
 
   onDelete() {
-    this.store.dispatch(new DeleteIngredient());
+    this.store.dispatch(new fromShoppingListActions.DeleteIngredient());
     this.onClear();
   }
 
