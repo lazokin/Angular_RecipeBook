@@ -21,8 +21,7 @@ export class LogInComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.store.dispatch(new fromAuth.LogIn(form.value.username, form.value.password))
-    this.router.navigate(['/']);
+    this.store.dispatch(new fromAuth.LogIn(form.value.username, form.value.password));
   }
 
 }

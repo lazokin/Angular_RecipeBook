@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromApp from 'src/app/store/app.reducers';
@@ -13,7 +12,7 @@ import * as fromAuth from '../../store/auth.actions';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private store: Store<fromApp.State>, private router: Router) {}
+  constructor(private store: Store<fromApp.State>) {}
 
   ngOnInit() {}
 
@@ -21,8 +20,7 @@ export class RegisterComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.store.dispatch(new fromAuth.Register(form.value.username, form.value.password))
-    this.router.navigate(['/']);
+    this.store.dispatch(new fromAuth.Register(form.value.username, form.value.password));
   }
 
 }

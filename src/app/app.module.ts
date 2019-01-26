@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AuthModule } from './modules/auth/auth.module';
 import { CoreModule } from './modules/core/core.module';
@@ -13,7 +14,7 @@ import { AppComponent } from './app.component';
 import { RecipeService } from './shared/services/recipe.service';
 
 import { routes } from './app.routes';
-import { reducers } from './store/app.reducers';
+import { reducers, effects } from './store/app.reducers';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { reducers } from './store/app.reducers';
     RecipesModule,
     ShoppingListModule,
     RouterModule.forRoot(routes),
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot(effects)
   ],
   exports: [
     RouterModule

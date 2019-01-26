@@ -1,4 +1,4 @@
-import { Actions, Type, LogIn, LogOut, Register } from './auth.actions';
+import { Actions, Type, Registered, LoggedIn, LoggedOut } from './auth.actions';
 
 export interface State {
     token: string;
@@ -8,29 +8,29 @@ export interface State {
 export const initialState: State = {
     token: null,
     authenticated: false
-}
+};
 
 export function authReducer(state: State = initialState, action: Actions): State {
     switch (action.type) {
-        case Type.LogIn:
-            return logIn(state, action);
-         case Type.LogOut:
-            return logOut(state, action);
-        case Type.Register:
-            return register(state, action);
+        case Type.Registered:
+            return registered(state, action);
+        case Type.LoggedIn:
+            return loggedIn(state, action);
+         case Type.LoggedOut:
+            return loggedOut(state, action);
         default:
             return state;
     }
 }
 
-function logIn(state: State, action: LogIn): State {
+function registered(state: State, action: Registered): State {
     return {...state, authenticated: true};
 }
 
-function logOut(state: State, action: LogOut): State {
+function loggedIn(state: State, action: LoggedIn): State {
+    return {...state, authenticated: true};
+}
+
+function loggedOut(state: State, action: LoggedOut): State {
     return {...state, authenticated: false, token: null};
-}
-
-function register(state: State, action: Register): State {
-    return {...state, authenticated: true};
 }
