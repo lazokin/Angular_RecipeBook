@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+import * as fromApp from 'src/app/store/app.reducers';
+import * as fromAuthReducers from 'src/app/modules/auth/store/auth.reducers';
+import * as fromAuthActions from 'src/app/modules/auth/store/auth.actions';
 
 @Component({
     selector: 'app-header',
@@ -7,8 +14,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-    constructor() { }
+    authState: Observable<fromAuthReducers.State>;
 
-    ngOnInit(): void {}
+    constructor(private store: Store<fromApp.State>, private router: Router) { }
+
+    ngOnInit(): void {
+        this.authState = this.store.pipe(select('auth'));
+    }
+
+    onLogOut() {
+        this.store.dispatch(new fromAuthActions.LogOut());
+        this.router.navigate(['/']);
+    }
 
 }

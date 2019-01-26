@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+import * as fromApp from 'src/app/store/app.reducers';
+import * as fromAuth from 'src/app/modules/auth/store/auth.reducers';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  authState: Observable<fromAuth.State>;
 
-  ngOnInit() {
+  constructor(private store: Store<fromApp.State>) { }
+
+  ngOnInit(): void {
+    this.authState = this.store.pipe(select('auth'));
   }
 
 }

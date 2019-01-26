@@ -5,8 +5,8 @@ import { Subscription } from 'rxjs';
 
 import { Ingredient } from 'src/app/shared/models/ingredient.model';
 
-import * as fromAppReducers from 'src/app/store/app.reducers';
-import * as fromShoppingListActions from '../../store/shopping-list.actions';
+import * as fromApp from 'src/app/store/app.reducers';
+import * as fromShoppingList from '../../store/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -20,7 +20,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
 
   private stateSubscription: Subscription;
 
-  constructor(private store: Store<fromAppReducers.State>) {}
+  constructor(private store: Store<fromApp.State>) {}
 
   ngOnInit() {
     this.stateSubscription = this.store.select('shoppingList').subscribe(state => {
@@ -42,12 +42,11 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       return;
     }
-    const value = form.value;
-    const ingredient = new Ingredient(value.name, value.amount);
+    const ingredient = new Ingredient(form.value.name, form.value.amount);
     if (this.selectedMode) {
-      this.store.dispatch(new fromShoppingListActions.UpdateIngredient(ingredient));
+      this.store.dispatch(new fromShoppingList.UpdateIngredient(ingredient));
     } else {
-      this.store.dispatch(new fromShoppingListActions.AddIngredient(ingredient));
+      this.store.dispatch(new fromShoppingList.AddIngredient(ingredient));
     }
     this.selectedMode = false;
     this.form.resetForm();
@@ -56,11 +55,11 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   onClear() {
     this.selectedMode = false;
     this.form.resetForm();
-    this.store.dispatch(new fromShoppingListActions.IngredientUnselected());
+    this.store.dispatch(new fromShoppingList.IngredientUnselected());
   }
 
   onDelete() {
-    this.store.dispatch(new fromShoppingListActions.DeleteIngredient());
+    this.store.dispatch(new fromShoppingList.DeleteIngredient());
     this.onClear();
   }
 

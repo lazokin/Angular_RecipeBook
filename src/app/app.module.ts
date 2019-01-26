@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 
+import { AuthModule } from './modules/auth/auth.module';
 import { CoreModule } from './modules/core/core.module';
 import { RecipesModule } from './modules/recipes/recipes.module';
 import { ShoppingListModule } from './modules/shopping-list/shopping-list.module';
@@ -12,7 +13,7 @@ import { AppComponent } from './app.component';
 import { RecipeService } from './shared/services/recipe.service';
 
 import { routes } from './app.routes';
-import { shoppingListReducer } from './modules/shopping-list/store/shopping-list.reducers';
+import { reducers } from './store/app.reducers';
 
 @NgModule({
   declarations: [
@@ -20,11 +21,12 @@ import { shoppingListReducer } from './modules/shopping-list/store/shopping-list
   ],
   imports: [
     BrowserModule,
+    AuthModule,
     CoreModule,
     RecipesModule,
     ShoppingListModule,
     RouterModule.forRoot(routes),
-    StoreModule.forRoot({shoppingList: shoppingListReducer})
+    StoreModule.forRoot(reducers)
   ],
   exports: [
     RouterModule

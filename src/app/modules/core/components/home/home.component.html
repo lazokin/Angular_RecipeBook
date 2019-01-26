@@ -4,9 +4,9 @@
     <h1 class="display-4">Recipe Book</h1>
     <p class="lead">Another place to satisfy your cullinary disposition.</p>
     <hr class="my-4">
-    <p class="lead">
-      <a class="btn btn-outline-primary" href="#" role="button">Sign In</a>
-      <a class="btn btn-outline-primary ml-2" href="#" role="button">Sign Up</a>
+    <p class="lead" *ngIf="!(authState|async).authenticated">
+      <a class="btn btn-outline-primary" role="button" routerLink="/login">Log In</a>
+      <a class="btn btn-outline-primary ml-2" role="button" routerLink="/register">Register</a>
     </p>
   </div>
 </div>
