@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromApp from 'src/app/store/app.reducers';
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
     constructor(private store: Store<fromApp.State>, private router: Router) { }
 
     ngOnInit(): void {
-        this.authState = this.store.pipe(select('auth'));
+        this.authState = this.store.select('auth');
     }
 
     onLogOut() {

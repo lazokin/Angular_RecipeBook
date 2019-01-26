@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { LogInComponent } from './components/log-in/log-in.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthGuard } from './guards/auth.guard';
 
 import { routes } from './auth.routes';
 
@@ -17,6 +18,9 @@ import { routes } from './auth.routes';
         CommonModule,
         FormsModule,
         RouterModule.forChild(routes)
+    ],
+    providers: [
+        AuthGuard
     ],
     exports: [
         RouterModule
