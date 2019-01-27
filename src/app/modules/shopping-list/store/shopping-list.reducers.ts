@@ -56,13 +56,13 @@ function updateIngredient(state: State, action: UpdateIngredient): State {
     const ingredient = {...state.ingredients[state.selectedIndex], ...action.ingredient};
     const ingredients = [...state.ingredients];
     ingredients[state.selectedIndex] = ingredient;
-    return {...state, ingredients: ingredients, selectedIngredient: null, selectedIndex: -1};
+    return {...state, ingredients: ingredients};
 }
 
 function deleteIngredient(state: State): State {
     const ingredients = [...state.ingredients];
     ingredients.splice(state.selectedIndex, 1);
-    return {...state, ingredients: ingredients, selectedIngredient: null, selectedIndex: -1};
+    return {...state, ingredients: ingredients};
 }
 
 function ingredientSelected(state: State, action: IngredientSelected): State {
