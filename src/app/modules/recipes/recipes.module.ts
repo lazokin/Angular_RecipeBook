@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
 
 import { RecipesMainComponent } from './components/recipes-main/recipes-main.component';
 import { RecipeDetailComponent } from './components/recipe-detail/recipe-detail.component';
@@ -11,6 +12,7 @@ import { RecipeListComponent } from './components/recipe-list/recipe-list.compon
 import { RecipeItemComponent } from './components/recipe-list/recipe-item/recipe-item.component';
 
 import { routes } from './recipes.routes';
+import { recipeReducer } from './store/recipes.reducers';
 
 @NgModule({
     declarations: [
@@ -24,7 +26,8 @@ import { routes } from './recipes.routes';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        StoreModule.forFeature('recipes', recipeReducer)
     ],
     exports: [
         RouterModule

@@ -1,16 +1,17 @@
 import { ActionReducerMap } from '@ngrx/store';
+import { RouterReducerState, routerReducer } from '@ngrx/router-store';
+import { RouterStateUrl } from './custom-route-serializer';
 import * as fromAuthReducers from '../modules/auth/store/auth.reducers';
 import * as fromAuthEffects from '../modules/auth/store/auth.effects';
-import * as fromShoppingListReducers from '../modules/shopping-list/store/shopping-list.reducers';
 
 export interface State {
     auth: fromAuthReducers.State;
-    shoppingList: fromShoppingListReducers.State;
+    router: RouterReducerState<RouterStateUrl>;
 }
 
 export const reducers: ActionReducerMap<State> = {
     auth: fromAuthReducers.authReducer,
-    shoppingList: fromShoppingListReducers.shoppingListReducer
+    router: routerReducer
 };
 
 export const effects = [

@@ -5,7 +5,7 @@ import { AuthGuard } from '../auth/guards/auth.guard';
 
 export const routes: Routes = [
     {
-        path: 'shopping-list',
+        path: '',
         component: ShoppingListMainComponent,
         canActivate: [AuthGuard]
     }

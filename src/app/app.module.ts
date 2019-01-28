@@ -8,15 +8,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AuthModule } from './modules/auth/auth.module';
 import { CoreModule } from './modules/core/core.module';
-import { RecipesModule } from './modules/recipes/recipes.module';
-import { ShoppingListModule } from './modules/shopping-list/shopping-list.module';
 
 import { AppComponent } from './app.component';
 
-import { RecipeService } from './shared/services/recipe.service';
-
 import { routes } from './app.routes';
 import { reducers, effects } from './store/app.reducers';
+import { CustomSerializer } from './store/custom-route-serializer';
 
 import { environment } from 'src/environments/environment';
 
@@ -28,19 +25,16 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     AuthModule,
     CoreModule,
-    RecipesModule,
-    ShoppingListModule,
     RouterModule.forRoot(routes),
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot(effects),
-    StoreRouterConnectingModule,
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer
+    }),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   exports: [
     RouterModule
-  ],
-  providers: [
-    RecipeService
   ],
   bootstrap: [
     AppComponent

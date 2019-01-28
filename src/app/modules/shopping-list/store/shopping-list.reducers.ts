@@ -1,6 +1,10 @@
 import { Actions, Type, AddIngredient, AddIngredients, UpdateIngredient, IngredientSelected } from './shopping-list.actions';
 import { Ingredient } from 'src/app/shared/models/ingredient.model';
 
+export interface FeatureState {
+    shoppingList: State;
+}
+
 export interface State {
     ingredients: Ingredient[];
     selectedIngredient: Ingredient;
